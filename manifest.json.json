@@ -1,0 +1,32 @@
+{
+  "name": "My Sanrio Life RPG",
+  "short_name": "SanrioRPG",
+  "description": "A cute RPG life management game with Sanrio theme",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffd1dc",
+  "theme_color": "#ff69b4",
+  "orientation": "portrait",
+  "scope": "/",
+  "categories": ["games", "productivity", "entertainment"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9IiNGRjY5QjQiLz4KPGNpcmNsZSBjeD0iOTYiIGN5PSI5NiIgcj0iNDgiIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9Ijc2IiBjeT0iNzYiIHI9IjEyIiBmaWxsPSJibGFjayIvPgo8Y2lyY2xlIGN4PSIxMTYiIGN5PSI3NiIgcj0iMTIiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik04OCAxMjggUTEwNCAxNDQgMTIwIDEyOCIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo=",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iNjQiIGZpbGw9IiNGRjY5QjQiLz4KPGNpcmNsZSBjeD0iMjU2IiBjeT0iMjU2IiByPSIxMjgiIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjE5MiIgY3k9IjE5MiIgcj0iMzIiIGZpbGw9ImJsYWNrIi8+CjxjaXJjbGUgY3g9IjMyMCIgY3k9IjE5MiIgcj0iMzIiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik0yMTYgMzIwIFEyNzIgMzg0IDMyOCAzMjAiIHN0cm9rZT0iYmxhY2siIHN0cm9rZS13aWR0aD0iOCIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI3MjAiIHZpZXdCb3g9IjAgMCAxMjgwIDcyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjEyODAiIGhlaWdodD0iNzIwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAiIHkxPSIwIiB4Mj0iMTI4MCIgeTI9IjcyMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjZmZkMWRjIi8+CjxzdG9wIG9mZnNldD0iMC41IiBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNlMGJiZmYiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8Y2lyY2xlIGN4PSI2NDAiIGN5PSIyMDAiIHI9IjgwIiBmaWxsPSIjRkY2OUI0Ii8+CjxyZWN0IHg9IjQwMCIgeT0iMzIwIiB3aWR0aD0iNDgwIiBoZWlnaHQ9IjI0MCIgcng9IjI0IiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjkiLz4KPHJlY3QgeD0iNDQwIiB5PSIzODAiIHdpZHRoPSI0MDAiIGhlaWdodD0iNjAiIHJ4PSIxMiIgZmlsbD0iI0ZGNkZCNyIvPgo8cmVjdCB4PSI0NDAiIHk9IjQ2MCIgd2lkdGg9IjQwMCIgaGVpZ2h0PSI2MCIgcng9IjEyIiBmaWxsPSIjRkY2RkI3Ii8+CjxyZWN0IHg9IjQ0MCIgeT0iNTQwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwIiByeD0iMTIiIGZpbGw9IiNGRjZGQjciLz4KPC9zdmc+Cg==",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ]
+}

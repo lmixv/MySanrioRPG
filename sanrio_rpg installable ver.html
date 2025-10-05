@@ -1,0 +1,2608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Melody Life RPG</title>
+    <meta name="theme-color" content="#ff69b4">
+    <meta name="description" content="A cute RPG life management game with My Melody theme">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- iOS Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="My Melody RPG">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Themes */
+        :root {
+            --primary-pink: #ff69b4;
+            --secondary-pink: #ff1493;
+            --light-pink: #ffd1dc;
+            --background: linear-gradient(135deg, #ffd1dc, #ffffff, #e0bbff);
+            --container-bg: rgba(255, 255, 255, 0.95);
+            --text-color: #333;
+            --section-bg: rgba(255, 240, 245, 0.7);
+        }
+
+        /* Spring Theme */
+        .spring-theme {
+            --background: linear-gradient(135deg, #ffd1dc, #bbffaa, #aaddff);
+            --section-bg: rgba(255, 240, 245, 0.8);
+        }
+
+        /* Summer Theme */
+        .summer-theme {
+            --background: linear-gradient(135deg, #ffd1dc, #ffffaa, #ffaa88);
+            --section-bg: rgba(255, 248, 225, 0.8);
+        }
+
+        /* Autumn Theme */
+        .autumn-theme {
+            --background: linear-gradient(135deg, #ffd1dc, #ffcc99, #ffaa66);
+            --section-bg: rgba(255, 240, 230, 0.8);
+        }
+
+        /* Winter Theme */
+        .winter-theme {
+            --background: linear-gradient(135deg, #ffd1dc, #aaddff, #ddf);
+            --section-bg: rgba(240, 248, 255, 0.8);
+        }
+
+        /* Night Theme */
+        .night-theme {
+            --background: linear-gradient(135deg, #4a4a8a, #2c2c54, #1a1a2e);
+            --container-bg: rgba(45, 45, 75, 0.95);
+            --text-color: #f0f0f0;
+            --section-bg: rgba(60, 60, 100, 0.7);
+            --primary-pink: #ff85c0;
+            --secondary-pink: #ff5cae;
+            --light-pink: #ffb6d9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: var(--background);
+            margin: 0;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            min-height: 100vh;
+            color: var(--text-color);
+            transition: all 0.5s ease;
+            overflow-x: hidden;
+        <script>
+// Simple Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      console.log('ServiceWorker registration successful');
+    }, function(err) {
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+</script>}
+
+        /* Install Prompt */
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            border: 3px solid var(--primary-pink);
+            max-width: 90%;
+        }
+
+        .install-prompt.show {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
+        .install-btn {
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-install {
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: var(--container-bg);
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
+            border: 4px solid var(--primary-pink);
+            position: relative;
+            overflow: hidden;
+            min-height: calc(100vh - 40px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .my-melody {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23ff69b4"/><circle cx="35" cy="40" r="8" fill="white"/><circle cx="65" cy="40" r="8" fill="white"/><circle cx="35" cy="40" r="4" fill="black"/><circle cx="65" cy="40" r="4" fill="black"/><path d="M40,65 Q50,75 60,65" stroke="black" stroke-width="3" fill="none"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        h1 {
+            color: var(--primary-pink);
+            font-size: 2.2em;
+            text-shadow: 2px 2px 0 var(--light-pink);
+            margin: 0;
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .date-display {
+            color: var(--secondary-pink);
+            font-size: 1.1em;
+            margin: 10px 0;
+            background: rgba(255, 240, 245, 0.7);
+            padding: 8px;
+            border-radius: 12px;
+            border: 2px dashed var(--primary-pink);
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 15px;
+            gap: 8px;
+        }
+
+        .tab {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            border: 2px solid var(--primary-pink);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 0.9em;
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .tab.active {
+            background: var(--primary-pink);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(45deg, rgba(255, 240, 245, 0.8), rgba(240, 248, 255, 0.8));
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 3px solid var(--primary-pink);
+            text-align: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #ffb6c1;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-number {
+            font-size: 1.6em;
+            color: var(--secondary-pink);
+            font-weight: bold;
+        }
+
+        /* Level Bar */
+        .level-bar {
+            background: var(--light-pink);
+            border-radius: 8px;
+            height: 16px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+
+        .level-fill {
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+            height: 100%;
+            border-radius: 8px;
+            transition: width 0.5s ease;
+        }
+
+        /* Skill Bars */
+        .skill-box {
+            position: relative;
+            min-height: 100px;
+        }
+
+        .skill-bar {
+            background: var(--light-pink);
+            border-radius: 8px;
+            height: 10px;
+            margin: 6px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-fill {
+            height: 100%;
+            border-radius: 8px;
+            transition: width 0.5s ease;
+        }
+
+        #knowledgeFill {
+            background: linear-gradient(45deg, #69b4ff, #1493ff);
+        }
+
+        #fitnessFill {
+            background: linear-gradient(45deg, #69ff7d, #14ff93);
+        }
+
+        #creativityFill {
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+        }
+
+        .skill-level {
+            font-size: 0.8em;
+            color: var(--primary-pink);
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        /* Sections */
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            background: var(--section-bg);
+            border-radius: 20px;
+            border: 3px solid #ffb6c1;
+        }
+
+        .section-title {
+            color: var(--secondary-pink);
+            text-align: center;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 var(--light-pink);
+        }
+
+        /* Grid Layouts */
+        .quest-grid, .shop-grid, .pet-grid, .garden-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        /* Quest and Shop Items */
+        .quest, .shop-item, .pet, .garden-plot {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px solid #ffb6c1;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .quest.completed {
+            background: linear-gradient(45deg, #d4ffd1, #bbffea);
+            border-color: #69ff7d;
+        }
+
+        .shop-item.owned {
+            background: linear-gradient(45deg, #fff9d1, #ffebb8);
+            border-color: #ffd469;
+        }
+
+        .item-title {
+            color: var(--secondary-pink);
+            font-size: 1.2em;
+            margin: 0 0 8px 0;
+            font-weight: bold;
+        }
+
+        .item-desc {
+            color: #666;
+            margin: 6px 0;
+            font-size: 0.9em;
+        }
+
+        .item-price {
+            color: var(--primary-pink);
+            font-weight: bold;
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        /* Buttons */
+        .cute-button {
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px 0;
+            font-family: 'Comic Sans MS', cursive;
+            width: 100%;
+        }
+
+        .cute-button:active {
+            transform: scale(0.98);
+        }
+
+        .cute-button:disabled {
+            background: #cccccc;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        .buy-button {
+            background: linear-gradient(45deg, #69b4ff, #1493ff);
+        }
+
+        /* Special Sections */
+        .daily-task {
+            background: linear-gradient(45deg, #e0bbff, #d1eaff);
+            border-color: #b469ff;
+        }
+
+        .pronote-section {
+            background: linear-gradient(45deg, #bbffd1, #d1ffbb);
+            border-color: #69ff7d;
+        }
+
+        .emoji-sparkle {
+            font-size: 1.2em;
+            margin: 0 3px;
+        }
+
+        /* Inventory */
+        .inventory {
+            background: linear-gradient(45deg, #d1eaff, #b8f4ff);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 3px dashed #69b4ff;
+        }
+
+        .inventory-title {
+            color: #1493ff;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .inventory-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .inventory-item {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 2px solid #69b4ff;
+            font-size: 0.85em;
+        }
+
+        /* Achievements */
+        .achievement {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #ffd469;
+            margin: 8px 0;
+        }
+
+        .achievement.earned {
+            background: linear-gradient(45deg, #fff9d1, #ffebb8);
+            border-color: #ffb469;
+        }
+
+        /* Skill Tree */
+        .skill-tree {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .skill-upgrade {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #69b4ff;
+            text-align: center;
+        }
+
+        .skill-upgrade.unlocked {
+            background: linear-gradient(45deg, #d1eaff, #b8f4ff);
+            border-color: #1493ff;
+        }
+
+        /* Multi-step Quests */
+        .multi-step-quest {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px solid #b469ff;
+            margin: 12px 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+
+        .step-checkbox {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            border: 2px solid #b469ff;
+            border-radius: 50%;
+        }
+
+        .step.completed .step-checkbox {
+            background: #69ff7d;
+            border-color: #69ff7d;
+        }
+
+        /* Friends System */
+        .friend {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #ffb6c1;
+            margin: 8px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px solid #69b4ff;
+            margin: 15px 0;
+        }
+
+        .theme-option {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .theme-option.active {
+            border-color: #333;
+        }
+
+        /* Pet System */
+        .pet-happiness {
+            height: 8px;
+            background: #ffd1dc;
+            border-radius: 4px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+
+        .pet-happiness-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Garden System */
+        .plant-growth {
+            height: 8px;
+            background: #d1ffd1;
+            border-radius: 4px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+
+        .plant-growth-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #69ff7d, #14ff93);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Weather Widget */
+        .weather-widget {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #69b4ff;
+            text-align: center;
+            margin: 8px 0;
+        }
+
+        .weather-icon {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+        }
+
+        /* Mini Games */
+        .mini-game {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px solid #b469ff;
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .game-card {
+            aspect-ratio: 1;
+            background: var(--primary-pink);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            cursor: pointer;
+        }
+
+        .game-card.flipped {
+            background: white;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-melody {
+            width: 120px;
+            height: 120px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23ff69b4"/><circle cx="35" cy="40" r="8" fill="white"/><circle cx="65" cy="40" r="8" fill="white"/><circle cx="35" cy="40" r="4" fill="black"/><circle cx="65" cy="40" r="4" fill="black"/><path d="M40,65 Q50,75 60,65" stroke="black" stroke-width="3" fill="none"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        .loading-text {
+            color: var(--primary-pink);
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .loading-bar-container {
+            width: 250px;
+            height: 16px;
+            background: var(--light-pink);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid var(--primary-pink);
+        }
+
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+            border-radius: 8px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .sparkle {
+            animation: sparkle 0.5s ease;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-pink);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 80%;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                border-radius: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .quest-grid, .shop-grid, .pet-grid, .garden-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .tab {
+                flex: 0 0 auto;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                padding: 10px;
+            }
+            
+            .stat-box {
+                padding: 8px;
+            }
+            
+            .section {
+                padding: 12px;
+                margin: 15px 0;
+            }
+            
+            .section-title {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body class="spring-theme">
+    <!-- Install Prompt -->
+    <div class="install-prompt" id="installPrompt">
+        <span>Install My Melody RPG?</span>
+        <button class="install-btn" id="installBtn">Install</button>
+        <button class="close-install" id="closeInstall">✕</button>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-melody"></div>
+        <div class="loading-text">My Melody Life RPG</div>
+        <div class="loading-text" style="font-size: 1em;">Loading your magical journey...</div>
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loadingBar"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="my-melody"></div>
+            <h1>My Melody Life RPG 🐰</h1>
+            <div class="date-display" id="dateDisplay">Loading date...</div>
+            <div style="margin-top: 10px;">
+                <span id="loginStreak">🔥 Day 1 Streak!</span>
+                <span id="weatherInfo" style="margin-left: 15px;">🌤️ Loading weather...</span>
+            </div>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('dashboard')">🏠 Dashboard</div>
+            <div class="tab" onclick="switchTab('quests')">📋 Quests</div>
+            <div class="tab" onclick="switchTab('skills')">📚 Skills</div>
+            <div class="tab" onclick="switchTab('shop')">🛍️ Shop</div>
+            <div class="tab" onclick="switchTab('pets')">🐰 Pets</div>
+            <div class="tab" onclick="switchTab('garden')">🌷 Garden</div>
+            <div class="tab" onclick="switchTab('friends')">👥 Friends</div>
+            <div class="tab" onclick="switchTab('games')">🎮 Games</div>
+            <div class="tab" onclick="switchTab('settings')">⚙️ Settings</div>
+        </div>
+        
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <!-- Level Progress Bar -->
+            <div class="level-bar">
+                <div class="level-fill" id="levelFill"></div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <div>💰 Gold</div>
+                    <div class="stat-number" id="gold">0</div>
+                </div>
+                <div class="stat-box">
+                    <div>⭐ XP</div>
+                    <div class="stat-number" id="xp">0</div>
+                </div>
+                <div class="stat-box">
+                    <div>🎯 Quests</div>
+                    <div class="stat-number" id="completedQuests">0</div>
+                </div>
+                <div class="stat-box">
+                    <div>🛍️ Items</div>
+                    <div class="stat-number" id="ownedItems">0</div>
+                </div>
+                <div class="stat-box">
+                    <div>👑 Level</div>
+                    <div class="stat-number" id="level">1</div>
+                </div>
+            </div>
+            
+            <!-- Weather Widget -->
+            <div class="weather-widget">
+                <div class="weather-icon" id="weatherIcon">🌤️</div>
+                <div id="weatherDetails">Loading weather data...</div>
+                <button class="cute-button" onclick="getLocationAndWeather()" style="width: auto; margin-top: 10px;">
+                    <i class="fas fa-sync-alt"></i> Update Weather
+                </button>
+            </div>
+            
+            <!-- Daily Summary -->
+            <div class="section">
+                <div class="section-title">📊 Today's Progress</div>
+                <div id="dailyProgress">
+                    <!-- Daily progress will be dynamically added here -->
+                </div>
+                <button class="cute-button" onclick="showDailySummary()">View Detailed Summary</button>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="section">
+                <div class="section-title">📝 Recent Activity</div>
+                <div id="recentActivity">
+                    <div class="item-desc">✨ Welcome to My Melody Life RPG! Complete your first quest to get started!</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quests Tab -->
+        <div id="quests" class="tab-content">
+            <!-- DAILY TASKS SECTION -->
+            <div class="section">
+                <div class="section-title">📅 Daily My Melody Tasks</div>
+                <div class="quest-grid" id="dailyTasks">
+                    <!-- Dynamic daily tasks will appear here -->
+                </div>
+            </div>
+
+            <!-- PRONOTE SECTION -->
+            <div class="section pronote-section">
+                <div class="section-title">📚 School & Pronote</div>
+                <div class="quest-grid">
+                    <div class="quest" id="pronote1">
+                        <div class="item-title">📖 Check Pronote</div>
+                        <div class="item-desc">Check your grades and homework</div>
+                        <div class="item-price">Reward: <span class="emoji-sparkle">💰</span> 30 Gold</div>
+                        <button class="cute-button" onclick="completeQuest('pronote1', 30, 15)">Complete! ✨</button>
+                    </div>
+                    <div class="quest" id="pronote2">
+                        <div class="item-title">📝 Homework Time</div>
+                        <div class="item-desc">Finish today's homework assignments</div>
+                        <div class="item-price">Reward: <span class="emoji-sparkle">💰</span> 80 Gold + <span class="emoji-sparkle">⭐</span> 40 XP</div>
+                        <button class="cute-button" onclick="completeQuest('pronote2', 80, 40)">Complete! ✨</button>
+                    </div>
+                    <div class="quest" id="pronote3">
+                        <div class="item-title">🎯 Study Session</div>
+                        <div class="item-desc">Study for 45 minutes for upcoming tests</div>
+                        <div class="item-price">Reward: <span class="emoji-sparkle">💰</span> 100 Gold + <span class="emoji-sparkle">⭐</span> 50 XP</div>
+                        <button class="cute-button" onclick="completeQuest('pronote3', 100, 50)">Complete! ✨</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REGULAR QUESTS -->
+            <div class="section">
+                <div class="section-title">🌷 Daily Quests</div>
+                <div class="quest-grid">
+                    <div class="quest" id="quest1">
+                        <div class="item-title">🧹 Room Cleaning</div>
+                        <div class="item-desc">Tidy up your room for 15 minutes</div>
+                        <div class="item-price">Reward: <span class="emoji-sparkle">💰</span> 40 Gold + <span class="emoji-sparkle">⭐</span> 20 XP</div>
+                        <button class="cute-button" onclick="completeQuest('quest1', 40, 20)">Complete! ✨</button>
+                    </div>
+                    <div class="quest" id="quest2">
+                        <div class="item-title">💪 Exercise Time</div>
+                        <div class="item-desc">15 minutes of workout or stretching</div>
+                        <div class="item-price">Reward: <span class="emoji-sparkle">💰</span> 60 Gold + <span class="emoji-sparkle">⭐</span> 30 XP</div>
+                        <button class="cute-button" onclick="completeQuest('quest2', 60, 30)">Complete! ✨</button>
+                    </div>
+                    <div class="quest" id="quest3">
+                        <div class="item-title">🎨 Creative Time</div>
+                        <div class="item-desc">Draw, craft, or create for 30 minutes</div>
+                        <div class="item-price">Reward: <span class="emoji-sparkle">💰</span> 70 Gold + <span class="emoji-sparkle">⭐</span> 35 XP</div>
+                        <button class="cute-button" onclick="completeQuest('quest3', 70, 35)">Complete! ✨</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MULTI-STEP QUESTS -->
+            <div class="section">
+                <div class="section-title">📋 Multi-Step Projects</div>
+                <div id="multiStepQuests">
+                    <!-- Multi-step quests will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Skills Tab -->
+        <div id="skills" class="tab-content">
+            <!-- Skills Section -->
+            <div class="section">
+                <div class="section-title">📚 Skills</div>
+                <div class="quest-grid">
+                    <div class="quest skill-box">
+                        <div class="item-title">📚 Knowledge</div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" id="knowledgeFill"></div>
+                        </div>
+                        <div class="skill-level">Level <span id="knowledgeLevel">1</span> (<span id="knowledge">0</span>/100)</div>
+                    </div>
+                    <div class="quest skill-box">
+                        <div class="item-title">💪 Fitness</div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" id="fitnessFill"></div>
+                        </div>
+                        <div class="skill-level">Level <span id="fitnessLevel">1</span> (<span id="fitness">0</span>/100)</div>
+                    </div>
+                    <div class="quest skill-box">
+                        <div class="item-title">🎨 Creativity</div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" id="creativityFill"></div>
+                        </div>
+                        <div class="skill-level">Level <span id="creativityLevel">1</span> (<span id="creativity">0</span>/100)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SKILL TREE SECTION -->
+            <div class="section">
+                <div class="section-title">🌳 Skill Tree</div>
+                <div class="skill-tree" id="skillTree">
+                    <!-- Skill upgrades will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- ACHIEVEMENTS SECTION -->
+            <div class="section">
+                <div class="section-title">🏆 Achievements</div>
+                <div id="achievementsList">
+                    <!-- Achievements will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Shop Tab -->
+        <div id="shop" class="tab-content">
+            <!-- REWARDS SHOP -->
+            <div class="section">
+                <div class="section-title">🛍️ My Melody Reward Shop</div>
+                <div class="shop-grid">
+                    <div class="shop-item" id="shop1">
+                        <div class="item-title">🍫 Favorite Snack</div>
+                        <div class="item-desc">Enjoy a yummy snack break!</div>
+                        <div class="item-price">Cost: <span class="emoji-sparkle">💰</span> 50 Gold</div>
+                        <button class="cute-button buy-button" onclick="buyReward('shop1', 50, '🍫 Favorite Snack')">Buy Reward! 🎀</button>
+                    </div>
+                    <div class="shop-item" id="shop2">
+                        <div class="item-title">🎮 1 Hour Gaming</div>
+                        <div class="item-desc">Play games guilt-free!</div>
+                        <div class="item-price">Cost: <span class="emoji-sparkle">💰</span> 100 Gold</div>
+                        <button class="cute-button buy-button" onclick="buyReward('shop2', 100, '🎮 1 Hour Gaming')">Buy Reward! 🎀</button>
+                    </div>
+                    <div class="shop-item" id="shop3">
+                        <div class="item-title">📺 Movie Time</div>
+                        <div class="item-desc">Watch an episode or movie</div>
+                        <div class="item-price">Cost: <span class="emoji-sparkle">💰</span> 80 Gold</div>
+                        <button class="cute-button buy-button" onclick="buyReward('shop3', 80, '📺 Movie Time')">Buy Reward! 🎀</button>
+                    </div>
+                    <div class="shop-item" id="shop4">
+                        <div class="item-title">🛌 Extra Relax Time</div>
+                        <div class="item-desc">30 minutes extra phone/relax time</div>
+                        <div class="item-price">Cost: <span class="emoji-sparkle">💰</span> 60 Gold</div>
+                        <button class="cute-button buy-button" onclick="buyReward('shop4', 60, '🛌 Extra Relax Time')">Buy Reward! 🎀</button>
+                    </div>
+                    <div class="shop-item" id="shop5">
+                        <div class="item-title">🎵 Music Session</div>
+                        <div class="item-desc">Listen to music while working</div>
+                        <div class="item-price">Cost: <span class="emoji-sparkle">💰</span> 40 Gold</div>
+                        <button class="cute-button buy-button" onclick="buyReward('shop5', 40, '🎵 Music Session')">Buy Reward! 🎀</button>
+                    </div>
+                    <div class="shop-item" id="shop6">
+                        <div class="item-title">🌟 Special Treat</div>
+                        <div class="item-desc">Get a special dessert or drink</div>
+                        <div class="item-price">Cost: <span class="emoji-sparkle">💰</span> 120 Gold</div>
+                        <button class="cute-button buy-button" onclick="buyReward('shop6', 120, '🌟 Special Treat')">Buy Reward! 🎀</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inventory">
+                <div class="inventory-title">🎒 My Reward Collection</div>
+                <div class="inventory-items" id="inventoryItems">
+                    <div class="inventory-item">✨ Welcome Gift</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pets Tab -->
+        <div id="pets" class="tab-content">
+            <div class="section">
+                <div class="section-title">🐰 My Melody Pets</div>
+                <div class="pet-grid" id="petsList">
+                    <!-- Pets will be dynamically added here -->
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="cute-button" onclick="adoptPet()" style="width: auto;">Adopt a New Pet! 🎀</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Garden Tab -->
+        <div id="garden" class="tab-content">
+            <div class="section">
+                <div class="section-title">🌷 My Melody Garden</div>
+                <div class="garden-grid" id="gardenPlots">
+                    <!-- Garden plots will be dynamically added here -->
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="cute-button" onclick="plantNewSeed()" style="width: auto;">Plant a New Seed! 🌱</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Friends Tab -->
+        <div id="friends" class="tab-content">
+            <div class="section">
+                <div class="section-title">👥 My Melody Friends</div>
+                <div id="friendsList">
+                    <!-- Friends will be dynamically added here -->
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="cute-button" onclick="inviteFriend()" style="width: auto;">Invite a Friend! 📩</button>
+                    <button class="cute-button" onclick="addFriend()" style="width: auto;">Add Friend by Code</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Games Tab -->
+        <div id="games" class="tab-content">
+            <div class="section">
+                <div class="section-title">🎮 Mini Games</div>
+                <div class="mini-game">
+                    <div class="item-title">🧠 Memory Match</div>
+                    <div class="item-desc">Match all the pairs to win gold!</div>
+                    <div class="game-board" id="memoryGame">
+                        <!-- Memory game cards will be dynamically added here -->
+                    </div>
+                    <button class="cute-button" onclick="startMemoryGame()" style="width: auto;">Start Game!</button>
+                </div>
+                
+                <div class="mini-game">
+                    <div class="item-title">🎯 Quick Click</div>
+                    <div class="item-desc">Click the bouncing My Melody as many times as you can in 10 seconds!</div>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div id="clickGameArea" style="height: 200px; border: 2px dashed var(--primary-pink); border-radius: 15px; position: relative; overflow: hidden;">
+                            <!-- Click game will be rendered here -->
+                        </div>
+                        <div style="margin: 10px 0;">
+                            <span>Score: </span><span id="clickScore">0</span>
+                        </div>
+                    </div>
+                    <button class="cute-button" onclick="startClickGame()" style="width: auto;">Start Game!</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Tab -->
+        <div id="settings" class="tab-content">
+            <!-- SETTINGS PANEL -->
+            <div class="settings-panel">
+                <div class="section-title">⚙️ Settings</div>
+                <div>
+                    <h3>🎨 Theme</h3>
+                    <div>
+                        <div class="theme-option active" style="background: linear-gradient(135deg, #ffd1dc, #bbffaa, #aaddff);" onclick="changeTheme('spring')"></div>
+                        <div class="theme-option" style="background: linear-gradient(135deg, #ffd1dc, #ffffaa, #ffaa88);" onclick="changeTheme('summer')"></div>
+                        <div class="theme-option" style="background: linear-gradient(135deg, #ffd1dc, #ffcc99, #ffaa66);" onclick="changeTheme('autumn')"></div>
+                        <div class="theme-option" style="background: linear-gradient(135deg, #ffd1dc, #aaddff, #ddf);" onclick="changeTheme('winter')"></div>
+                        <div class="theme-option" style="background: linear-gradient(135deg, #4a4a8a, #2c2c54, #1a1a2e);" onclick="changeTheme('night')"></div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button class="cute-button" onclick="shareProgress()">📤 Share Progress</button>
+                    <button class="cute-button" onclick="toggleSound()">🔊 Toggle Sound</button>
+                    <button class="cute-button" onclick="exportSave()">💾 Export Save</button>
+                    <button class="cute-button" onclick="importSave()">📥 Import Save</button>
+                    <button class="cute-button" onclick="resetGame()" style="background: linear-gradient(45deg, #ff6b6b, #ee5a52);">🔄 Reset Game</button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="cute-button" onclick="showDailySummary()">📊 Daily Summary</button>
+                <button class="cute-button" onclick="resetDay()">🔄 New Day</button>
+                <button class="cute-button" onclick="triggerRandomEvent()">🎲 Random Event</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script>
+        // 🎀 ULTIMATE GAME DATA WITH ALL FEATURES
+        
+        // Core Game Data
+        let gold = 100;
+        let xp = 0;
+        let level = 1;
+        let completedQuests = 0;
+        let ownedItems = 1;
+        const xpPerLevel = 100;
+        let inventory = ["✨ Welcome Gift"];
+        let completedToday = [];
+        let currentDate = new Date();
+        
+        // Skill System
+        let knowledge = 0;
+        let fitness = 0;
+        let creativity = 0;
+        let knowledgeLevel = 1;
+        let fitnessLevel = 1;
+        let creativityLevel = 1;
+        const skillPointsPerLevel = 100;
+        
+        // ACHIEVEMENTS
+        let achievements = [
+            { id: "first_quest", name: "First Quest!", desc: "Complete your first quest", earned: false, reward: 50 },
+            { id: "gold_hoarder", name: "Gold Collector", desc: "Reach 500 gold", earned: false, reward: 100 },
+            { id: "skill_master", name: "Skill Master", desc: "Reach level 5 in all skills", earned: false, reward: 200 },
+            { id: "quest_master", name: "Quest Master", desc: "Complete 10 quests", earned: false, reward: 150 },
+            { id: "daily_streak", name: "Consistent Player", desc: "Maintain a 7-day login streak", earned: false, reward: 300 },
+            { id: "pet_lover", name: "Pet Lover", desc: "Adopt your first pet", earned: false, reward: 100 },
+            { id: "green_thumb", name: "Green Thumb", desc: "Grow your first plant to full size", earned: false, reward: 150 }
+        ];
+        
+        // DAILY LOGIN REWARDS
+        let loginStreak = 1;
+        let lastLoginDate = null;
+        
+        // SKILL TREE
+        let skillTree = {
+            knowledge: [
+                { id: "quick_learner", name: "Quick Learner", desc: "Gain 10% more XP from knowledge quests", cost: 50, unlocked: false },
+                { id: "research_expert", name: "Research Expert", desc: "Knowledge quests give 25% more gold", cost: 100, unlocked: false }
+            ],
+            fitness: [
+                { id: "morning_person", name: "Morning Person", desc: "Fitness quests completed before noon give bonus", cost: 75, unlocked: false },
+                { id: "stamina_boost", name: "Stamina Boost", desc: "Fitness skill grows 20% faster", cost: 120, unlocked: false }
+            ],
+            creativity: [
+                { id: "creative_flow", name: "Creative Flow", desc: "Creativity quests completed in one sitting give bonus", cost: 80, unlocked: false },
+                { id: "inspiration_strike", name: "Inspiration Strike", desc: "Chance to get double creativity points", cost: 150, unlocked: false }
+            ]
+        };
+        
+        // MULTI-STEP QUESTS
+        let multiStepQuests = [
+            {
+                id: "big_project",
+                name: "School Project",
+                desc: "Complete a major school project",
+                steps: [
+                    { name: "Research", completed: false },
+                    { name: "Outline", completed: false },
+                    { name: "First Draft", completed: false },
+                    { name: "Final Version", completed: false }
+                ],
+                currentStep: 0,
+                rewards: [20, 30, 50, 100],
+                completed: false
+            }
+        ];
+        
+        // RANDOM EVENTS
+        let randomEvents = [
+            { 
+                message: "🐰 My Melody found a lucky coin on her walk! +20G", 
+                effect: () => { gold += 20; updateDisplay(); },
+                rarity: "common"
+            },
+            { 
+                message: "🌈 A rainbow appeared! All quests give double XP today!", 
+                effect: () => { xpMultiplier = 2; },
+                rarity: "rare"
+            },
+            { 
+                message: "🎁 A mysterious gift arrived! +50 Gold and +25 XP!", 
+                effect: () => { gold += 50; xp += 25; updateDisplay(); },
+                rarity: "uncommon"
+            }
+        ];
+        
+        // PET SYSTEM
+        let pets = [
+            { 
+                id: "bunny1", 
+                name: "Pippin", 
+                type: "bunny", 
+                level: 1, 
+                happiness: 100,
+                exp: 0,
+                equipped: true,
+                abilities: ["Daily bonus gold"]
+            }
+        ];
+        
+        // GARDEN SYSTEM
+        let garden = {
+            plots: [
+                { id: 1, plant: "pink_rose", growth: 65, water: 80, stage: "flowering" },
+                { id: 2, plant: null, growth: 0, water: 0, stage: "empty" },
+                { id: 3, plant: null, growth: 0, water: 0, stage: "empty" },
+                { id: 4, plant: null, growth: 0, water: 0, stage: "empty" }
+            ],
+            seeds: ["pink_rose", "sunflower", "lavender", "tulip"]
+        };
+        
+        // FRIENDS SYSTEM
+        let friends = [
+            { name: "Kuromi", level: 3, lastActive: "2 hours ago", code: "KURO123" },
+            { name: "Hello Kitty", level: 5, lastActive: "1 day ago", code: "KITTY456" },
+            { name: "Cinnamoroll", level: 2, lastActive: "30 minutes ago", code: "CINNA789" }
+        ];
+        
+        // WEATHER SYSTEM
+        let weather = {
+            location: "Unknown",
+            temperature: 0,
+            condition: "Unknown",
+            icon: "🌤️",
+            lastUpdated: null
+        };
+        
+        // MINI-GAMES
+        let memoryGame = {
+            active: false,
+            cards: [],
+            flippedCards: [],
+            matchedPairs: 0,
+            moves: 0
+        };
+        
+        let clickGame = {
+            active: false,
+            score: 0,
+            timeLeft: 0,
+            timer: null
+        };
+        
+        // Game Settings
+        let soundEnabled = true;
+        let xpMultiplier = 1;
+        let skillMultiplier = 1;
+        let currentTab = "dashboard";
+        
+        // PWA Install Prompt
+        let deferredPrompt;
+        
+        // 🎀 INITIALIZATION FUNCTIONS
+        
+        function initGame() {
+            // Simulate loading progress
+            let progress = 0;
+            const loadingBar = document.getElementById('loadingBar');
+            const loadingScreen = document.getElementById('loadingScreen');
+            
+            const loadingInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(loadingInterval);
+                    
+                    // Hide loading screen after a short delay
+                    setTimeout(() => {
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 500);
+                    }, 500);
+                }
+                loadingBar.style.width = progress + '%';
+            }, 200);
+            
+            // Load saved progress
+            loadProgress();
+            
+            // Check daily login
+            checkDailyLogin();
+            
+            // Get weather information
+            getLocationAndWeather();
+            
+            // Initialize all game displays
+            updateDateDisplay();
+            generateDailyTasks();
+            updateDisplay();
+            updateInventory();
+            updateAllSkillDisplays();
+            updateAchievementsDisplay();
+            updateSkillTreeDisplay();
+            updateMultiStepQuestsDisplay();
+            updateFriendsDisplay();
+            updatePetsDisplay();
+            updateGardenDisplay();
+            updateDailyProgress();
+            
+            // Check achievements on load
+            checkAchievements();
+            
+            // Set up PWA install prompt
+            setupInstallPrompt();
+        }
+        
+        // 🎀 PWA INSTALL PROMPT
+        
+        function setupInstallPrompt() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                // Prevent the mini-infobar from appearing on mobile
+                e.preventDefault();
+                // Stash the event so it can be triggered later
+                deferredPrompt = e;
+                // Show our custom install prompt
+                setTimeout(() => {
+                    document.getElementById('installPrompt').classList.add('show');
+                }, 3000);
+            });
+            
+            document.getElementById('installBtn').addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                    document.getElementById('installPrompt').classList.remove('show');
+                }
+            });
+            
+            document.getElementById('closeInstall').addEventListener('click', () => {
+                document.getElementById('installPrompt').classList.remove('show');
+            });
+        }
+        
+        // 🎀 CORE GAME FUNCTIONS
+        
+        function completeQuest(questId, goldReward, xpReward) {
+            if (completedToday.includes(questId)) {
+                showNotification("🎀 You already completed this today!");
+                return;
+            }
+            
+            // Apply multipliers
+            const actualGold = goldReward;
+            const actualXP = xpReward * xpMultiplier;
+            
+            gold += actualGold;
+            xp += actualXP;
+            completedQuests++;
+            completedToday.push(questId);
+            
+            // Add skill points based on quest type
+            if (questId.includes('pronote') || questId.includes('homework') || questId.includes('study')) {
+                updateSkill('knowledge', 15);
+            }
+            else if (questId.includes('fitness') || questId.includes('workout') || questId.includes('shower') || questId.includes('exercise')) {
+                updateSkill('fitness', 15);
+            }
+            else if (questId.includes('creative') || questId.includes('art') || questId.includes('draw')) {
+                updateSkill('creativity', 15);
+            }
+            else {
+                // Default: small points to all skills
+                updateSkill('knowledge', 5);
+                updateSkill('fitness', 5);
+                updateSkill('creativity', 5);
+            }
+            
+            // Level up check
+            if (xp >= level * xpPerLevel) {
+                level++;
+                createConfetti();
+                createFloatingHearts();
+                showNotification(`🎉 LEVEL UP! You're now Level ${level}! 🌟`);
+            }
+            
+            updateDisplay();
+            updateDailyProgress();
+            
+            const questElement = document.getElementById(questId);
+            if (questElement) {
+                questElement.classList.add('completed');
+                const button = questElement.querySelector('button');
+                button.disabled = true;
+                button.textContent = 'Completed! ⭐';
+            }
+            
+            createConfetti();
+            createFloatingHearts();
+            showNotification(`🎀 Quest completed! +${actualGold}G +${actualXP}XP`);
+            
+            // Add to recent activity
+            addRecentActivity(`Completed quest: ${questElement.querySelector('.item-title').textContent}`);
+            
+            // Check for achievements
+            checkAchievements();
+            
+            saveProgress();
+        }
+        
+        function buyReward(itemId, cost, itemName) {
+            if (gold >= cost) {
+                gold -= cost;
+                ownedItems++;
+                inventory.push(itemName);
+                
+                updateDisplay();
+                updateInventory();
+                
+                const item = document.getElementById(itemId);
+                item.classList.add('owned');
+                const button = item.querySelector('button');
+                button.disabled = true;
+                button.textContent = 'Claimed! ✅';
+                
+                createConfetti();
+                createFloatingHearts();
+                showNotification(`🛍️ You bought: ${itemName}! Enjoy! 🎀`);
+                
+                // Add to recent activity
+                addRecentActivity(`Purchased: ${itemName}`);
+                
+                // Check for achievements
+                checkAchievements();
+                
+                saveProgress();
+            } else {
+                showNotification(`💔 Need ${cost}G but only have ${gold}G. Complete more quests!`);
+            }
+        }
+        
+        // 🎀 SKILL SYSTEM
+        
+        function updateSkill(skillType, points) {
+            let skillIncreased = false;
+            let actualPoints = points * skillMultiplier;
+            
+            if (skillType === 'knowledge') {
+                knowledge += actualPoints;
+                if (knowledge >= knowledgeLevel * skillPointsPerLevel) {
+                    knowledgeLevel++;
+                    knowledge = 0;
+                    skillIncreased = true;
+                    showNotification(`📚 Knowledge Level Up! Now level ${knowledgeLevel}!`);
+                    checkAchievements();
+                }
+                updateSkillDisplay('knowledge', knowledge, knowledgeLevel);
+            }
+            else if (skillType === 'fitness') {
+                fitness += actualPoints;
+                if (fitness >= fitnessLevel * skillPointsPerLevel) {
+                    fitnessLevel++;
+                    fitness = 0;
+                    skillIncreased = true;
+                    showNotification(`💪 Fitness Level Up! Now level ${fitnessLevel}!`);
+                    checkAchievements();
+                }
+                updateSkillDisplay('fitness', fitness, fitnessLevel);
+            }
+            else if (skillType === 'creativity') {
+                creativity += actualPoints;
+                if (creativity >= creativityLevel * skillPointsPerLevel) {
+                    creativityLevel++;
+                    creativity = 0;
+                    skillIncreased = true;
+                    showNotification(`🎨 Creativity Level Up! Now level ${creativityLevel}!`);
+                    checkAchievements();
+                }
+                updateSkillDisplay('creativity', creativity, creativityLevel);
+            }
+            
+            if (skillIncreased) {
+                createConfetti();
+                createFloatingHearts();
+            }
+        }
+        
+        function updateSkillDisplay(skillName, currentPoints, skillLevel) {
+            const percent = (currentPoints / (skillLevel * skillPointsPerLevel)) * 100;
+            document.getElementById(skillName).textContent = Math.floor(currentPoints);
+            document.getElementById(skillName + 'Fill').style.width = percent + '%';
+            document.getElementById(skillName + 'Level').textContent = skillLevel;
+        }
+        
+        function updateAllSkillDisplays() {
+            updateSkillDisplay('knowledge', knowledge, knowledgeLevel);
+            updateSkillDisplay('fitness', fitness, fitnessLevel);
+            updateSkillDisplay('creativity', creativity, creativityLevel);
+        }
+        
+        // 🎀 DISPLAY FUNCTIONS
+        
+        function updateDisplay() {
+            document.getElementById('gold').textContent = gold;
+            document.getElementById('xp').textContent = xp;
+            document.getElementById('level').textContent = level;
+            document.getElementById('completedQuests').textContent = completedQuests;
+            document.getElementById('ownedItems').textContent = ownedItems;
+            
+            const levelProgress = (xp % xpPerLevel) / xpPerLevel * 100;
+            document.getElementById('levelFill').style.width = levelProgress + '%';
+            
+            // Update login streak display
+            document.getElementById('loginStreak').textContent = `🔥 Day ${loginStreak} Streak!`;
+        }
+        
+        function updateInventory() {
+            const inventoryElement = document.getElementById('inventoryItems');
+            inventoryElement.innerHTML = inventory.map(item => 
+                `<div class="inventory-item">${item}</div>`
+            ).join('');
+        }
+        
+        function updateDateDisplay() {
+            currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('dateDisplay').textContent = currentDate.toLocaleDateString('en-US', options);
+        }
+        
+        function generateDailyTasks() {
+            const dailyTasksContainer = document.getElementById('dailyTasks');
+            const dayOfWeek = currentDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
+            const tasks = [];
+            
+            // Wednesday and Saturday shower task
+            if (dayOfWeek === 3 || dayOfWeek === 6) { // 3 = Wednesday, 6 = Saturday
+                tasks.push({
+                    id: 'daily1',
+                    title: '🚿 Shower Time',
+                    desc: 'Take a refreshing shower',
+                    gold: 40,
+                    xp: 20
+                });
+            }
+            
+            // Daily hygiene task (every day)
+            tasks.push({
+                id: 'daily2', 
+                title: '🪥 Morning Routine',
+                desc: 'Brush teeth and basic hygiene',
+                gold: 30,
+                xp: 15
+            });
+            
+            // Wednesday specific task (example: laundry day)
+            if (dayOfWeek === 3) {
+                tasks.push({
+                    id: 'daily3',
+                    title: '👗 Laundry Day',
+                    desc: 'Help with laundry',
+                    gold: 60,
+                    xp: 30
+                });
+            }
+            
+            // Weekend tasks
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+                tasks.push({
+                    id: 'daily4',
+                    title: '🛏️ Room Refresh',
+                    desc: 'Deep clean your room',
+                    gold: 80,
+                    xp: 40
+                });
+            }
+            
+            // Render tasks
+            dailyTasksContainer.innerHTML = tasks.map(task => `
+                <div class="quest daily-task" id="${task.id}">
+                    <div class="item-title">${task.title}</div>
+                    <div class="item-desc">${task.desc}</div>
+                    <div class="item-price">Reward: <span class="emoji-sparkle">💰</span> ${task.gold} Gold + <span class="emoji-sparkle">⭐</span> ${task.xp} XP</div>
+                    <button class="cute-button" onclick="completeQuest('${task.id}', ${task.gold}, ${task.xp})">Complete! ✨</button>
+                </div>
+            `).join('');
+        }
+        
+        // 🎀 NEW FEATURE: WEATHER SYSTEM
+        
+        function getLocationAndWeather() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        fetchWeatherData(lat, lon);
+                    },
+                    error => {
+                        console.error("Error getting location:", error);
+                        // Use default weather data
+                        weather.location = "Unknown Location";
+                        weather.temperature = 20;
+                        weather.condition = "Sunny";
+                        weather.icon = "🌤️";
+                        updateWeatherDisplay();
+                    }
+                );
+            } else {
+                showNotification("Geolocation is not supported by this browser.");
+            }
+        }
+        
+        function fetchWeatherData(lat, lon) {
+            // Using OpenWeatherMap API (you would need to replace with your own API key)
+            // For demo purposes, we'll use mock data
+            
+            setTimeout(() => {
+                // Mock weather data
+                weather.location = "Your City";
+                weather.temperature = Math.floor(Math.random() * 30) + 10; // Random temp between 10-40°C
+                const conditions = ["Sunny", "Cloudy", "Rainy", "Snowy"];
+                weather.condition = conditions[Math.floor(Math.random() * conditions.length)];
+                
+                // Set appropriate icon
+                switch(weather.condition) {
+                    case "Sunny": weather.icon = "☀️"; break;
+                    case "Cloudy": weather.icon = "☁️"; break;
+                    case "Rainy": weather.icon = "🌧️"; break;
+                    case "Snowy": weather.icon = "❄️"; break;
+                    default: weather.icon = "🌤️";
+                }
+                
+                updateWeatherDisplay();
+                showNotification(`🌤️ Weather updated! It's ${weather.condition.toLowerCase()} today.`);
+            }, 1000);
+        }
+        
+        function updateWeatherDisplay() {
+            document.getElementById('weatherIcon').textContent = weather.icon;
+            document.getElementById('weatherDetails').textContent = 
+                `${weather.location} • ${weather.temperature}°C • ${weather.condition}`;
+            document.getElementById('weatherInfo').textContent = 
+                `${weather.icon} ${weather.temperature}°C, ${weather.condition}`;
+        }
+        
+        // 🎀 NEW FEATURE: PET SYSTEM
+        
+        function updatePetsDisplay() {
+            const petsList = document.getElementById('petsList');
+            petsList.innerHTML = pets.map(pet => `
+                <div class="pet">
+                    <div class="item-title">${pet.name} the ${pet.type}</div>
+                    <div class="item-desc">Level ${pet.level} • ${getPetTypeEmoji(pet.type)}</div>
+                    <div class="pet-happiness">
+                        <div class="pet-happiness-fill" style="width: ${pet.happiness}%"></div>
+                    </div>
+                    <div class="item-price">Happiness: ${pet.happiness}%</div>
+                    <button class="cute-button" onclick="interactWithPet('${pet.id}')">Play with ${pet.name}! 🎾</button>
+                    <button class="cute-button" onclick="feedPet('${pet.id}')">Feed ${pet.name}! 🥕</button>
+                </div>
+            `).join('');
+        }
+        
+        function getPetTypeEmoji(type) {
+            switch(type) {
+                case "bunny": return "🐰";
+                case "kitty": return "🐱";
+                case "puppy": return "🐶";
+                default: return "🐾";
+            }
+        }
+        
+        function adoptPet() {
+            if (gold >= 200) {
+                gold -= 200;
+                const petTypes = ["bunny", "kitty", "puppy"];
+                const names = ["Pippin", "Mochi", "Biscuit", "Coco", "Luna", "Milo"];
+                const newPet = {
+                    id: `pet${pets.length + 1}`,
+                    name: names[Math.floor(Math.random() * names.length)],
+                    type: petTypes[Math.floor(Math.random() * petTypes.length)],
+                    level: 1,
+                    happiness: 100,
+                    exp: 0,
+                    equipped: false,
+                    abilities: ["Daily bonus gold"]
+                };
+                pets.push(newPet);
+                updateDisplay();
+                updatePetsDisplay();
+                showNotification(`🎉 You adopted ${newPet.name} the ${newPet.type}! 🐾`);
+                
+                // Check for pet lover achievement
+                checkAchievements();
+                
+                saveProgress();
+            } else {
+                showNotification(`💔 You need 200 gold to adopt a pet! You have ${gold} gold.`);
+            }
+        }
+        
+        function interactWithPet(petId) {
+            const pet = pets.find(p => p.id === petId);
+            if (pet) {
+                pet.happiness = Math.min(100, pet.happiness + 10);
+                pet.exp += 5;
+                
+                if (pet.exp >= 100) {
+                    pet.level++;
+                    pet.exp = 0;
+                    showNotification(`🎉 ${pet.name} leveled up! Now level ${pet.level}`);
+                }
+                
+                updatePetsDisplay();
+                showNotification(`🐇 You played with ${pet.name}! Happiness +10`);
+                saveProgress();
+            }
+        }
+        
+        function feedPet(petId) {
+            const pet = pets.find(p => p.id === petId);
+            if (pet) {
+                pet.happiness = Math.min(100, pet.happiness + 20);
+                updatePetsDisplay();
+                showNotification(`🥕 You fed ${pet.name}! Happiness +20`);
+                saveProgress();
+            }
+        }
+        
+        // 🎀 NEW FEATURE: GARDEN SYSTEM
+        
+        function updateGardenDisplay() {
+            const gardenPlots = document.getElementById('gardenPlots');
+            gardenPlots.innerHTML = garden.plots.map(plot => `
+                <div class="garden-plot">
+                    <div class="item-title">Garden Plot ${plot.id}</div>
+                    ${plot.plant ? `
+                        <div class="item-desc">${getPlantName(plot.plant)} • ${plot.stage}</div>
+                        <div class="plant-growth">
+                            <div class="plant-growth-fill" style="width: ${plot.growth}%"></div>
+                        </div>
+                        <div class="item-price">Growth: ${plot.growth}% • Water: ${plot.water}%</div>
+                        <button class="cute-button" onclick="waterPlant(${plot.id})">Water Plant 💧</button>
+                        ${plot.growth >= 100 ? `<button class="cute-button" onclick="harvestPlant(${plot.id})">Harvest! 🌸</button>` : ''}
+                    ` : `
+                        <div class="item-desc">Empty plot</div>
+                        <button class="cute-button" onclick="plantSeed(${plot.id})">Plant a Seed 🌱</button>
+                    `}
+                </div>
+            `).join('');
+        }
+        
+        function getPlantName(plantType) {
+            switch(plantType) {
+                case "pink_rose": return "Pink Rose";
+                case "sunflower": return "Sunflower";
+                case "lavender": return "Lavender";
+                case "tulip": return "Tulip";
+                default: return "Unknown Plant";
+            }
+        }
+        
+        function plantNewSeed() {
+            if (gold >= 50) {
+                gold -= 50;
+                const emptyPlot = garden.plots.find(plot => !plot.plant);
+                if (emptyPlot) {
+                    const randomSeed = garden.seeds[Math.floor(Math.random() * garden.seeds.length)];
+                    plantSeed(emptyPlot.id, randomSeed);
+                } else {
+                    showNotification("💔 You don't have any empty garden plots!");
+                    gold += 50; // Refund the gold
+                }
+                updateDisplay();
+            } else {
+                showNotification(`💔 You need 50 gold to buy seeds! You have ${gold} gold.`);
+            }
+        }
+        
+        function plantSeed(plotId, seedType = null) {
+            const plot = garden.plots.find(p => p.id === plotId);
+            if (plot && !plot.plant) {
+                plot.plant = seedType || garden.seeds[Math.floor(Math.random() * garden.seeds.length)];
+                plot.growth = 0;
+                plot.water = 100;
+                plot.stage = "seed";
+                updateGardenDisplay();
+                showNotification(`🌱 Planted a ${getPlantName(plot.plant)} in plot ${plotId}!`);
+                saveProgress();
+            }
+        }
+        
+        function waterPlant(plotId) {
+            const plot = garden.plots.find(p => p.id === plotId);
+            if (plot && plot.plant) {
+                plot.water = Math.min(100, plot.water + 30);
+                plot.growth = Math.min(100, plot.growth + 10);
+                
+                // Update plant stage based on growth
+                if (plot.growth < 25) plot.stage = "seed";
+                else if (plot.growth < 50) plot.stage = "sprout";
+                else if (plot.growth < 75) plot.stage = "budding";
+                else plot.stage = "flowering";
+                
+                updateGardenDisplay();
+                showNotification(`💧 Watered the ${getPlantName(plot.plant)}! Growth +10%`);
+                
+                // Check for green thumb achievement
+                if (plot.growth >= 100) {
+                    checkAchievements();
+                }
+                
+                saveProgress();
+            }
+        }
+        
+        function harvestPlant(plotId) {
+            const plot = garden.plots.find(p => p.id === plotId);
+            if (plot && plot.plant && plot.growth >= 100) {
+                const reward = 100;
+                gold += reward;
+                plot.plant = null;
+                plot.growth = 0;
+                plot.water = 0;
+                plot.stage = "empty";
+                updateDisplay();
+                updateGardenDisplay();
+                showNotification(`🌸 Harvested ${getPlantName(plot.plant)}! +${reward} gold`);
+                saveProgress();
+            }
+        }
+        
+        // 🎀 NEW FEATURE: FRIENDS SYSTEM
+        
+        function updateFriendsDisplay() {
+            const friendsList = document.getElementById('friendsList');
+            friendsList.innerHTML = friends.map(friend => `
+                <div class="friend">
+                    <div class="item-title">${friend.name}</div>
+                    <div class="item-desc">Level ${friend.level}</div>
+                    <div class="item-price">Last active: ${friend.lastActive}</div>
+                    <div class="item-desc">Friend Code: ${friend.code}</div>
+                    <button class="cute-button" style="width: auto; margin: 5px;" onclick="sendGift('${friend.code}')">Send Gift 🎁</button>
+                    <button class="cute-button" style="width: auto; margin: 5px; background: linear-gradient(45deg, #ff6b6b, #ee5a52);" onclick="removeFriend('${friend.code}')">Remove</button>
+                </div>
+            `).join('');
+        }
+        
+        function inviteFriend() {
+            const inviteCode = generateFriendCode();
+            const inviteText = `Join me in My Melody Life RPG! Use my friend code: ${inviteCode} 🎀✨`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Join My Melody Life RPG!',
+                    text: inviteText
+                });
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(inviteText).then(() => {
+                    showNotification("📋 Invitation copied to clipboard!");
+                });
+            } else {
+                // Fallback
+                prompt("Copy this invitation to send to your friends:", inviteText);
+            }
+        }
+        
+        function addFriend() {
+            const friendCode = prompt("Enter your friend's code:");
+            if (friendCode) {
+                // In a real implementation, this would validate the code with a server
+                // For now, we'll just add a mock friend
+                const newFriend = {
+                    name: `Friend${friends.length + 1}`,
+                    level: Math.floor(Math.random() * 10) + 1,
+                    lastActive: "Just now",
+                    code: friendCode
+                };
+                friends.push(newFriend);
+                updateFriendsDisplay();
+                showNotification(`👥 Added ${newFriend.name} as a friend!`);
+                saveProgress();
+            }
+        }
+        
+        function generateFriendCode() {
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+        
+        function sendGift(friendCode) {
+            if (gold >= 50) {
+                gold -= 50;
+                updateDisplay();
+                showNotification(`🎁 Sent a gift to your friend! -50 gold`);
+                saveProgress();
+            } else {
+                showNotification(`💔 You need 50 gold to send a gift!`);
+            }
+        }
+        
+        function removeFriend(friendCode) {
+            if (confirm("Are you sure you want to remove this friend?")) {
+                friends = friends.filter(f => f.code !== friendCode);
+                updateFriendsDisplay();
+                showNotification("👥 Friend removed");
+                saveProgress();
+            }
+        }
+        
+        // 🎀 NEW FEATURE: MINI-GAMES
+        
+        function startMemoryGame() {
+            memoryGame.active = true;
+            memoryGame.matchedPairs = 0;
+            memoryGame.moves = 0;
+            memoryGame.flippedCards = [];
+            
+            // Create card pairs
+            const symbols = ['🐰', '🎀', '🌸', '⭐', '🍬', '🐱', '🌈', '🎵'];
+            memoryGame.cards = [...symbols, ...symbols];
+            
+            // Shuffle cards
+            for (let i = memoryGame.cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [memoryGame.cards[i], memoryGame.cards[j]] = [memoryGame.cards[j], memoryGame.cards[i]];
+            }
+            
+            // Render game board
+            const gameBoard = document.getElementById('memoryGame');
+            gameBoard.innerHTML = memoryGame.cards.map((symbol, index) => `
+                <div class="game-card" onclick="flipCard(${index})">
+                    ?
+                </div>
+            `).join('');
+            
+            showNotification("🧠 Memory game started! Find all matching pairs!");
+        }
+        
+        function flipCard(index) {
+            if (!memoryGame.active || memoryGame.flippedCards.length >= 2) return;
+            
+            const card = document.querySelectorAll('.game-card')[index];
+            if (card.classList.contains('flipped') || memoryGame.flippedCards.includes(index)) return;
+            
+            card.textContent = memoryGame.cards[index];
+            card.classList.add('flipped');
+            memoryGame.flippedCards.push(index);
+            
+            if (memoryGame.flippedCards.length === 2) {
+                memoryGame.moves++;
+                const [firstIndex, secondIndex] = memoryGame.flippedCards;
+                
+                if (memoryGame.cards[firstIndex] === memoryGame.cards[secondIndex]) {
+                    // Match found
+                    memoryGame.matchedPairs++;
+                    memoryGame.flippedCards = [];
+                    
+                    if (memoryGame.matchedPairs === memoryGame.cards.length / 2) {
+                        // Game completed
+                        const reward = 100;
+                        gold += reward;
+                        updateDisplay();
+                        showNotification(`🎉 You won the memory game! +${reward} gold!`);
+                        memoryGame.active = false;
+                    }
+                } else {
+                    // No match, flip cards back after a delay
+                    setTimeout(() => {
+                        document.querySelectorAll('.game-card')[firstIndex].classList.remove('flipped');
+                        document.querySelectorAll('.game-card')[firstIndex].textContent = '?';
+                        document.querySelectorAll('.game-card')[secondIndex].classList.remove('flipped');
+                        document.querySelectorAll('.game-card')[secondIndex].textContent = '?';
+                        memoryGame.flippedCards = [];
+                    }, 1000);
+                }
+            }
+        }
+        
+        function startClickGame() {
+            clickGame.active = true;
+            clickGame.score = 0;
+            clickGame.timeLeft = 10;
+            
+            document.getElementById('clickScore').textContent = '0';
+            
+            const gameArea = document.getElementById('clickGameArea');
+            gameArea.innerHTML = '';
+            
+            // Create click target
+            const target = document.createElement('div');
+            target.style.position = 'absolute';
+            target.style.width = '50px';
+            target.style.height = '50px';
+            target.style.background = 'var(--primary-pink)';
+            target.style.borderRadius = '50%';
+            target.style.cursor = 'pointer';
+            target.style.display = 'flex';
+            target.style.alignItems = 'center';
+            target.style.justifyContent = 'center';
+            target.style.fontSize = '1.5em';
+            target.textContent = '🐰';
+            
+            target.addEventListener('click', () => {
+                if (clickGame.active) {
+                    clickGame.score++;
+                    document.getElementById('clickScore').textContent = clickGame.score;
+                    moveTarget(target);
+                    createFloatingHearts();
+                }
+            });
+            
+            gameArea.appendChild(target);
+            moveTarget(target);
+            
+            // Start timer
+            clickGame.timer = setInterval(() => {
+                clickGame.timeLeft--;
+                if (clickGame.timeLeft <= 0) {
+                    endClickGame();
+                }
+            }, 1000);
+            
+            showNotification("🎯 Click the bouncing My Melody as fast as you can!");
+        }
+        
+        function moveTarget(target) {
+            const gameArea = document.getElementById('clickGameArea');
+            const maxX = gameArea.clientWidth - 50;
+            const maxY = gameArea.clientHeight - 50;
+            
+            const newX = Math.floor(Math.random() * maxX);
+            const newY = Math.floor(Math.random() * maxY);
+            
+            target.style.left = `${newX}px`;
+            target.style.top = `${newY}px`;
+        }
+        
+        function endClickGame() {
+            clickGame.active = false;
+            clearInterval(clickGame.timer);
+            
+            const reward = clickGame.score * 2;
+            gold += reward;
+            updateDisplay();
+            
+            showNotification(`🎯 Game over! Final score: ${clickGame.score}. You earned ${reward} gold!`);
+        }
+        
+        // 🎀 UTILITY FUNCTIONS
+        
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            currentTab = tabName;
+        }
+        
+        function showDailySummary() {
+            const summary = `📊 Daily Summary:
+💰 Gold: ${gold}
+⭐ XP: ${xp} 
+👑 Level: ${level}
+🎯 Completed Today: ${completedToday.length}
+🛍️ Rewards Owned: ${ownedItems}
+🔥 Login Streak: ${loginStreak} days
+🐰 Pets: ${pets.length}
+🌷 Plants: ${garden.plots.filter(p => p.plant).length}
+👥 Friends: ${friends.length}
+
+Keep being amazing! 🐰✨`;
+            alert(summary);
+        }
+        
+        function updateDailyProgress() {
+            const dailyProgress = document.getElementById('dailyProgress');
+            const completedCount = completedToday.length;
+            const totalQuests = 6; // Based on the current quest setup
+            
+            dailyProgress.innerHTML = `
+                <div class="item-desc">Today you've completed ${completedCount} out of ${totalQuests} available quests.</div>
+                <div class="level-bar">
+                    <div class="level-fill" style="width: ${(completedCount / totalQuests) * 100}%"></div>
+                </div>
+                <div class="item-desc">${completedCount === totalQuests ? '🎉 Amazing! You completed all quests today!' : 'Keep going! You can do it! 🐰'}</div>
+            `;
+        }
+        
+        function addRecentActivity(activity) {
+            const recentActivity = document.getElementById('recentActivity');
+            const activityItem = document.createElement('div');
+            activityItem.className = 'item-desc';
+            activityItem.textContent = `⏰ ${new Date().toLocaleTimeString()} - ${activity}`;
+            recentActivity.insertBefore(activityItem, recentActivity.firstChild);
+            
+            // Limit to 5 activities
+            if (recentActivity.children.length > 5) {
+                recentActivity.removeChild(recentActivity.lastChild);
+            }
+        }
+        
+        function resetDay() {
+            if (confirm("🎀 Start a new day?\n(You'll keep your gold/level but reset daily tasks)")) {
+                completedToday = [];
+                generateDailyTasks();
+                updateDailyProgress();
+                showNotification("🔄 New day started! Make it magical! ✨");
+                saveProgress();
+            }
+        }
+        
+        function triggerRandomEvent() {
+            // 30% chance of an event happening
+            if (Math.random() < 0.3) {
+                const event = randomEvents[Math.floor(Math.random() * randomEvents.length)];
+                showNotification(event.message);
+                event.effect();
+                createFloatingHearts();
+            } else {
+                showNotification("🎲 Nothing special happened today. Try again tomorrow!");
+            }
+        }
+        
+        // 🎀 ACHIEVEMENTS SYSTEM
+        
+        function checkAchievements() {
+            let newAchievements = false;
+            
+            // Check each achievement condition
+            achievements.forEach(achievement => {
+                if (!achievement.earned) {
+                    let earned = false;
+                    
+                    switch(achievement.id) {
+                        case "first_quest":
+                            earned = completedQuests >= 1;
+                            break;
+                        case "gold_hoarder":
+                            earned = gold >= 500;
+                            break;
+                        case "skill_master":
+                            earned = knowledgeLevel >= 5 && fitnessLevel >= 5 && creativityLevel >= 5;
+                            break;
+                        case "quest_master":
+                            earned = completedQuests >= 10;
+                            break;
+                        case "daily_streak":
+                            earned = loginStreak >= 7;
+                            break;
+                        case "pet_lover":
+                            earned = pets.length >= 1;
+                            break;
+                        case "green_thumb":
+                            earned = garden.plots.some(p => p.growth >= 100);
+                            break;
+                    }
+                    
+                    if (earned) {
+                        achievement.earned = true;
+                        gold += achievement.reward;
+                        showNotification(`🏆 Achievement Unlocked: ${achievement.name}! +${achievement.reward}G`);
+                        newAchievements = true;
+                        updateAchievementsDisplay();
+                        updateDisplay();
+                    }
+                }
+            });
+            
+            if (newAchievements) {
+                createConfetti();
+                createFloatingHearts();
+            }
+        }
+        
+        function updateAchievementsDisplay() {
+            const achievementsList = document.getElementById('achievementsList');
+            achievementsList.innerHTML = achievements.map(achievement => `
+                <div class="achievement ${achievement.earned ? 'earned' : ''}">
+                    <div class="item-title">${achievement.earned ? '⭐ ' : ''}${achievement.name}</div>
+                    <div class="item-desc">${achievement.desc}</div>
+                    <div class="item-price">${achievement.earned ? `Reward: ${achievement.reward}G` : 'Not earned yet'}</div>
+                </div>
+            `).join('');
+        }
+        
+        // 🎀 DAILY LOGIN REWARDS
+        
+        function checkDailyLogin() {
+            const today = new Date().toDateString();
+            
+            if (lastLoginDate !== today) {
+                // New day!
+                if (lastLoginDate) {
+                    const yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    
+                    if (yesterday.toDateString() === lastLoginDate) {
+                        // Consecutive login
+                        loginStreak++;
+                    } else {
+                        // Broken streak
+                        loginStreak = 1;
+                    }
+                }
+                
+                // Give daily reward based on streak
+                const dailyReward = 10 + (loginStreak * 5);
+                gold += dailyReward;
+                showNotification(`🎁 Daily Login Bonus! Day ${loginStreak} streak! +${dailyReward}G`);
+                
+                lastLoginDate = today;
+                updateDisplay();
+                saveProgress();
+            }
+        }
+        
+        // 🎀 SKILL TREE
+        
+        function updateSkillTreeDisplay() {
+            const skillTreeElement = document.getElementById('skillTree');
+            let skillTreeHTML = '';
+            
+            // Knowledge skills
+            skillTreeHTML += `<div><h3>📚 Knowledge</h3>`;
+            skillTree.knowledge.forEach(skill => {
+                skillTreeHTML += `
+                    <div class="skill-upgrade ${skill.unlocked ? 'unlocked' : ''}">
+                        <div class="item-title">${skill.name}</div>
+                        <div class="item-desc">${skill.desc}</div>
+                        <div class="item-price">Cost: ${skill.cost}G</div>
+                        ${!skill.unlocked ? 
+                            `<button class="cute-button" onclick="unlockSkill('knowledge', '${skill.id}')">Unlock</button>` : 
+                            '<div class="item-price">✅ Unlocked</div>'
+                        }
+                    </div>
+                `;
+            });
+            skillTreeHTML += `</div>`;
+            
+            // Fitness skills
+            skillTreeHTML += `<div><h3>💪 Fitness</h3>`;
+            skillTree.fitness.forEach(skill => {
+                skillTreeHTML += `
+                    <div class="skill-upgrade ${skill.unlocked ? 'unlocked' : ''}">
+                        <div class="item-title">${skill.name}</div>
+                        <div class="item-desc">${skill.desc}</div>
+                        <div class="item-price">Cost: ${skill.cost}G</div>
+                        ${!skill.unlocked ? 
+                            `<button class="cute-button" onclick="unlockSkill('fitness', '${skill.id}')">Unlock</button>` : 
+                            '<div class="item-price">✅ Unlocked</div>'
+                        }
+                    </div>
+                `;
+            });
+            skillTreeHTML += `</div>`;
+            
+            // Creativity skills
+            skillTreeHTML += `<div><h3>🎨 Creativity</h3>`;
+            skillTree.creativity.forEach(skill => {
+                skillTreeHTML += `
+                    <div class="skill-upgrade ${skill.unlocked ? 'unlocked' : ''}">
+                        <div class="item-title">${skill.name}</div>
+                        <div class="item-desc">${skill.desc}</div>
+                        <div class="item-price">Cost: ${skill.cost}G</div>
+                        ${!skill.unlocked ? 
+                            `<button class="cute-button" onclick="unlockSkill('creativity', '${skill.id}')">Unlock</button>` : 
+                            '<div class="item-price">✅ Unlocked</div>'
+                        }
+                    </div>
+                `;
+            });
+            skillTreeHTML += `</div>`;
+            
+            skillTreeElement.innerHTML = skillTreeHTML;
+        }
+        
+        function unlockSkill(category, skillId) {
+            const skill = skillTree[category].find(s => s.id === skillId);
+            
+            if (skill && !skill.unlocked && gold >= skill.cost) {
+                gold -= skill.cost;
+                skill.unlocked = true;
+                updateDisplay();
+                updateSkillTreeDisplay();
+                showNotification(`🔓 Unlocked ${skill.name}!`);
+                saveProgress();
+            } else if (gold < skill.cost) {
+                showNotification(`💔 Not enough gold to unlock ${skill.name}!`);
+            }
+        }
+        
+        // 🎀 MULTI-STEP QUESTS
+        
+        function updateMultiStepQuestsDisplay() {
+            const multiStepQuestsElement = document.getElementById('multiStepQuests');
+            multiStepQuestsElement.innerHTML = multiStepQuests.map(quest => `
+                <div class="multi-step-quest">
+                    <div class="item-title">${quest.name}</div>
+                    <div class="item-desc">${quest.desc}</div>
+                    <div class="steps">
+                        ${quest.steps.map((step, index) => `
+                            <div class="step ${index < quest.currentStep ? 'completed' : ''}">
+                                <div class="step-checkbox"></div>
+                                <span>${step.name}</span>
+                                ${index === quest.currentStep && !quest.completed ? 
+                                    `<button class="cute-button" style="margin-left: auto; width: auto;" onclick="completeStep('${quest.id}', ${index})">Complete</button>` : 
+                                    ''
+                                }
+                            </div>
+                        `).join('')}
+                    </div>
+                    ${quest.completed ? '<div class="item-price">✅ Project Completed!</div>' : ''}
+                </div>
+            `).join('');
+        }
+        
+        function completeStep(questId, stepIndex) {
+            const quest = multiStepQuests.find(q => q.id === questId);
+            
+            if (quest && !quest.completed && quest.currentStep === stepIndex) {
+                quest.steps[stepIndex].completed = true;
+                quest.currentStep++;
+                
+                // Give reward for this step
+                gold += quest.rewards[stepIndex];
+                updateDisplay();
+                
+                // Check if quest is complete
+                if (quest.currentStep >= quest.steps.length) {
+                    quest.completed = true;
+                    showNotification(`🎉 Project "${quest.name}" completed!`);
+                    createConfetti();
+                    createFloatingHearts();
+                } else {
+                    showNotification(`✅ Completed step: ${quest.steps[stepIndex].name}! +${quest.rewards[stepIndex]}G`);
+                }
+                
+                updateMultiStepQuestsDisplay();
+                saveProgress();
+            }
+        }
+        
+        // 🎀 SETTINGS FUNCTIONS
+        
+        function changeTheme(theme) {
+            document.body.className = `${theme}-theme`;
+            
+            // Update active theme indicator
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            showNotification(`🎨 Changed to ${theme} theme!`);
+            saveProgress();
+        }
+        
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            showNotification(soundEnabled ? "🔊 Sound enabled!" : "🔇 Sound disabled!");
+            saveProgress();
+        }
+        
+        function shareProgress() {
+            const shareText = `🎀 My Melody Life RPG Progress:
+Level ${level} | ${gold} Gold | ${completedQuests} Quests Completed
+Skills: Knowledge Lv${knowledgeLevel} | Fitness Lv${fitnessLevel} | Creativity Lv${creativityLevel}
+Login Streak: ${loginStreak} days
+Pets: ${pets.length} | Plants: ${garden.plots.filter(p => p.plant).length}
+
+Join my magical journey! ✨`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Melody Life RPG',
+                    text: shareText
+                });
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    showNotification("📋 Progress copied to clipboard!");
+                });
+            } else {
+                // Fallback
+                prompt("Copy your progress to share:", shareText);
+            }
+        }
+        
+        function resetGame() {
+            if (confirm("Are you sure you want to reset your game? This will delete all your progress!")) {
+                localStorage.removeItem('myMelodyRPG');
+                location.reload();
+            }
+        }
+        
+        // 🎀 SAVE/LOAD SYSTEM
+        
+        function getAllProgress() {
+            return {
+                gold,
+                xp,
+                level,
+                completedQuests,
+                ownedItems,
+                inventory,
+                completedToday,
+                knowledge,
+                fitness,
+                creativity,
+                knowledgeLevel,
+                fitnessLevel,
+                creativityLevel,
+                achievements,
+                loginStreak,
+                lastLoginDate,
+                skillTree,
+                multiStepQuests,
+                pets,
+                garden,
+                friends,
+                weather,
+                soundEnabled,
+                saveDate: currentDate.toDateString(),
+                theme: document.body.className.replace('-theme', '')
+            };
+        }
+        
+        function loadAllProgress(progress) {
+            // Load all progress
+            gold = progress.gold || 100;
+            xp = progress.xp || 0;
+            level = progress.level || 1;
+            completedQuests = progress.completedQuests || 0;
+            ownedItems = progress.ownedItems || 1;
+            inventory = progress.inventory || ["✨ Welcome Gift"];
+            completedToday = progress.completedToday || [];
+            
+            // Load skills
+            knowledge = progress.knowledge || 0;
+            fitness = progress.fitness || 0;
+            creativity = progress.creativity || 0;
+            knowledgeLevel = progress.knowledgeLevel || 1;
+            fitnessLevel = progress.fitnessLevel || 1;
+            creativityLevel = progress.creativityLevel || 1;
+            
+            // Load new features
+            achievements = progress.achievements || achievements;
+            loginStreak = progress.loginStreak || 1;
+            lastLoginDate = progress.lastLoginDate || null;
+            skillTree = progress.skillTree || skillTree;
+            multiStepQuests = progress.multiStepQuests || multiStepQuests;
+            pets = progress.pets || pets;
+            garden = progress.garden || garden;
+            friends = progress.friends || friends;
+            weather = progress.weather || weather;
+            soundEnabled = progress.soundEnabled !== undefined ? progress.soundEnabled : true;
+            
+            // Load theme
+            if (progress.theme) {
+                document.body.className = `${progress.theme}-theme`;
+            }
+        }
+        
+        function saveProgress() {
+            const progress = getAllProgress();
+            localStorage.setItem('myMelodyRPG', JSON.stringify(progress));
+        }
+        
+        function loadProgress() {
+            const saved = localStorage.getItem('myMelodyRPG');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                loadAllProgress(progress);
+            }
+        }
+        
+        function exportSave() {
+            const progress = getAllProgress();
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(progress));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "my_melody_save.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+            showNotification("💾 Save data exported!");
+        }
+        
+        function importSave() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        const progress = JSON.parse(event.target.result);
+                        loadAllProgress(progress);
+                        showNotification("📥 Save data imported successfully!");
+                        location.reload();
+                    } catch (error) {
+                        showNotification("❌ Error importing save data!");
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+        
+        // 🎀 VISUAL EFFECTS
+        
+        function createFloatingHearts() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.textContent = '💖';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 2000);
+                }, i * 200);
+            }
+        }
+        
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => notification.classList.remove('show'), 3000);
+        }
+        
+        function createConfetti() {
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = ['#ff69b4', '#ff1493', '#69b4ff', '#ffd469'][Math.floor(Math.random() * 4)];
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 1000);
+                }, i * 100);
+            }
+        }
+        
+        // Initialize game when page loads
+        window.onload = initGame;
+    </script>
+</body>
+</html>
